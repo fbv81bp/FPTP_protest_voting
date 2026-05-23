@@ -10,9 +10,9 @@
     <!-- Split pie: orange~45%, green~30%, purple~15%, blue~10% -->
     <symbol id="p-split" viewBox="-40 -40 80 80">
       <!-- orange: -90° to 72° (162°) -->
-      <path d="M0,0 L0,-38 A38,38 0 0,1 36.1,11.7 Z" fill="#F0821E" stroke="#111" stroke-width="2"/>
+      <path d="M0,0 L0,-38 A38,38 0 0,1 36.1,11.7 Z" fill="#4CAF50" stroke="#111" stroke-width="2"/>
       <!-- green: 72° to 180° (108°) -->
-      <path d="M0,0 L36.1,11.7 A38,38 0 0,1 -38,0 Z" fill="#4CAF50" stroke="#111" stroke-width="2"/>
+      <path d="M0,0 L36.1,11.7 A38,38 0 0,1 -38,0 Z" fill="#F0821E" stroke="#111" stroke-width="2"/>
       <!-- purple: 180° to 234° (54°) -->
       <path d="M0,0 L-38,0 A38,38 0 0,1 -22.3,-30.7 Z" fill="#8B4FA8" stroke="#111" stroke-width="2"/>
       <!-- blue: 234° to 270° (36°) -->
