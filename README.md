@@ -1,6 +1,6 @@
 # FPTP Protest Voting
 
-> *"Everyone for one, one for everyone — a voter coordination pact"*
+> *"All for change, change for all — a voter coordination pact"*
 
 **A single HTML file that helps voters in First-Past-the-Post democracies coordinate tactically — without agreeing on anything except the method.**
 
@@ -66,7 +66,7 @@ echo -n "CONSTITUENCY|CANDIDATE_NAME|BEST_SALT|INDEX_VALUE" | sha256sum
 
 If a different version of this tool produces a different result for the same inputs, **it is provably tampered with.** This is the defence against fake forks: mathematical transparency makes central trust unnecessary.
 
-> ⚠️ **Warning for forks:** The order of fields in the hash input (`constituency|candidate|salt|index`) must never be changed. A fork that reorders the fields produces different results and is incompatible — and indistinguishable from a deliberate attempt to split coordination. The oldest, most widely circulated version of this tool is the canonical reference.
+> ⚠️ **Warning for forks:** The hash as well as the order of fields in the hash input (`constituency|candidate|salt|index`) must never be changed. A fork that reorders the fields produces different results and is incompatible — and indistinguishable from a deliberate attempt to split coordination. The oldest, most widely circulated version of this tool is the canonical reference.
 
 ---
 
@@ -111,7 +111,7 @@ This is not a tool for the left or the right. It is a tool for the outvoted.
 
 ## Licence
 
-MIT — free to use, study, modify, and distribute. The only informal constraint: if you fork this, **do not change the hash input format.** Doing so silently fragments coordination in a way that is technically indistinguishable from a deliberate attack on the tool's purpose.
+MIT — free to use, study, modify, and distribute. The only informal constraint: if you fork this, **do not change the hash and its input format.** Doing so silently fragments coordination in a way that is technically indistinguishable from a deliberate attack on the tool's purpose.
 
 ---
 
