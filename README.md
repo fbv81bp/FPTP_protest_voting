@@ -4,8 +4,6 @@
 
 **A single HTML file that helps voters in First-Past-the-Post democracies coordinate tactically — without agreeing on anything except the method.**
 
-![FPTP Coordination Illustration](fptp_illustration.svg)
-
 ---
 
 ## The problem in one paragraph
@@ -40,6 +38,8 @@ winner = max( SHA-256( constituency | candidate_name | salt_i | index_value ) )
 ```
 
 More popular candidates have more "lottery tickets" — a higher probability of winning — but the result is not deterministic until the index value is known. Once known, it's the same for everyone, everywhere, and independently verifiable.
+
+![FPTP Coordination Illustration](fptp_illustration.svg)
 
 ---
 
