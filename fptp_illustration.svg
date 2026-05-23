@@ -64,7 +64,7 @@
   <line x1="378" y1="80" x2="430" y2="80" stroke="#111" stroke-width="3" marker-end="url(#arr)"/>
 
   <!-- 4 orange results -->
-  <use href="#r-blue"   x="438" y="40" width="80" height="80"/>
+  <use href="#r-orange"   x="438" y="40" width="80" height="80"/>
   <use href="#p-orange" x="528" y="40" width="80" height="80"/>
   <use href="#p-orange" x="618" y="40" width="80" height="80"/>
   <use href="#p-orange" x="708" y="40" width="80" height="80"/>
