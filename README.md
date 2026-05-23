@@ -6,6 +6,8 @@
 
 ![FPTP Coordination Illustration](fptp_illustration.svg)
 
+---
+
 ## The problem in one paragraph
 
 In FPTP systems, the candidate with the most votes wins each constituency — not a majority, just a plurality. When three or four opposition candidates split the vote, a ruling party candidate can win with 30–35% of the vote. Multiplied across hundreds of constituencies, this produces governments that most voters did not choose. And once in power, a rational government has every incentive to keep the opposition fragmented: culture wars, identity politics, and structural rules that make coordination harder with every election cycle.
