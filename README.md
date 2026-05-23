@@ -4,7 +4,7 @@
 
 **A single HTML file that helps voters in First-Past-the-Post democracies coordinate tactically — without agreeing on anything except the method.**
 
----
+![FPTP Coordination Illustration](fptp_illustration.svg)
 
 ## The problem in one paragraph
 
