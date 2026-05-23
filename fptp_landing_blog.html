@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One for All · FPTP Coordination</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --paper: #fafaf7;
+  --paper2: #f0efe8;
+  --accent: #c0392b;
+  --accent2: #2471a3;
+  --muted: #707070;
+  --rule: #ddd;
+  --green: #1e8449;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 400;
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+.page {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* HEADER */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 56px 24px 48px;
+  text-align: center;
+}
+
+.header-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8c547;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+header h1 em {
+  font-style: italic;
+  color: #e8c547;
+}
+
+.motto {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 18px;
+  margin-top: 4px;
+}
+
+/* META */
+.meta {
+  display: flex;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+/* TOC */
+.toc {
+  background: var(--paper2);
+  border-left: 3px solid var(--accent2);
+  padding: 20px 24px;
+  margin: 36px 0;
+  font-size: 0.92rem;
+}
+
+.toc-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.toc ol {
+  padding-left: 20px;
+  color: var(--accent2);
+  line-height: 2;
+}
+
+.toc ol li a {
+  color: var(--accent2);
+  text-decoration: none;
+}
+
+.toc ol li a:hover {
+  text-decoration: underline;
+}
+
+/* BODY TEXT */
+.body-text {
+  padding: 40px 0 0;
+}
+
+h2 {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 56px 0 20px;
+  padding-top: 40px;
+  border-top: 2px solid var(--ink);
+  color: var(--ink);
+}
+
+h2 .section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+h3 {
+  font-family: 'Lora', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 32px 0 10px;
+  color: var(--ink);
+}
+
+p {
+  margin-bottom: 1.4em;
+  color: var(--ink);
+}
+
+/* EXAMPLE BOX */
+.example {
+  margin: 32px 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.example-header {
+  background: var(--paper2);
+  padding: 10px 18px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+}
+
+.example-body {
+  padding: 18px 20px;
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.example-body p { margin-bottom: 0.8em; }
+.example-body p:last-child { margin-bottom: 0; }
+
+/* VOTE TABLE */
+.vote-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.88rem;
+}
+
+.vote-table th {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.vote-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.vote-table tr.winner td {
+  background: #eafaf1;
+  color: var(--green);
+  font-weight: 600;
+}
+
+.vote-table tr.loser td {
+  color: var(--muted);
+}
+
+.vote-table .note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 6px 12px;
+  background: var(--paper2);
+}
+
+/* PULLQUOTE */
+.pullquote {
+  margin: 36px 0;
+  padding: 24px 28px;
+  border-left: 4px solid var(--accent);
+  background: var(--paper2);
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* HIGHLIGHT BOX */
+.highlight {
+  margin: 32px 0;
+  padding: 20px 24px;
+  background: #eaf4fb;
+  border-left: 4px solid var(--accent2);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.highlight strong {
+  color: var(--accent2);
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ALGO BOX */
+.algo-box {
+  margin: 28px 0;
+  background: #1a1a1a;
+  color: #e8e8e8;
+  padding: 20px 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.9;
+  border-radius: 3px;
+}
+
+.algo-box .c { color: #6a6a8a; }
+.algo-box .k { color: #e8c547; }
+.algo-box .v { color: #4fc4a0; }
+
+/* PROPERTY LIST */
+.prop-list {
+  margin: 28px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.prop-list li {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0 14px;
+}
+
+.prop-list li:first-child { border-top: 1px solid var(--rule); }
+
+.prop-icon {
+  font-size: 1.1rem;
+  padding-top: 2px;
+}
+
+.prop-text strong {
+  display: block;
+  font-size: 0.97rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.prop-text p {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* CTA */
+.cta {
+  margin: 64px 0 72px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 44px 32px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.cta-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  color: #e8c547;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.cta h3 {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 14px;
+  border: none;
+  padding: 0;
+}
+
+.cta p {
+  color: #aaa;
+  font-size: 0.92rem;
+  max-width: 420px;
+  margin: 0 auto 24px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 13px 32px;
+  background: #e8c547;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 400;
+  border-radius: 2px;
+  transition: opacity 0.2s;
+}
+
+.cta-btn:hover { opacity: 0.85; }
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  h2 { font-size: 1.4rem; }
+  .pullquote { font-size: 1rem; padding: 18px 20px; }
+  .vote-table { font-size: 0.82rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">A tool for democratic self-defence</div>
+  <h1>All for One<br><em>& One for All</em></h1>
+  <p class="motto">"You vote for mine and I vote for yours — a voter coordination pact"</p>
+</header>
+
+<div class="page">
+
+  <div class="meta">
+    <span>Long read · ~10 min</span>
+    <span>Open source · Offline</span>
+    <span>Works on any phone</span>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">In this article</div>
+    <ol>
+      <li><a href="#continuity"><strong>The breakthrough: change without breaking anything</strong></a></li>
+      <li><a href="#problem">The problem: how a minority governs a majority</a></li>
+      <li><a href="#division">Why the system is designed to divide us</a></li>
+      <li><a href="#solution">The idea: coordinating without agreeing on anything</a></li>
+      <li><a href="#how">How it works, step by step</a></li>
+      <li><a href="#properties">Eight reasons this is different from everything before it</a></li>
+      <li><a href="#deeper">The deeper picture: a self-correcting democratic tool</a></li>
+    </ol>
+  </div>
+
+  <div class="body-text">
+
+    <!-- 0. CONTINUITY — THE BREAKTHROUGH -->
+    <h2 id="continuity">
+      <span class="section-num">The Breakthrough</span>
+      Change without breaking anything
+    </h2>
+
+    <p>Before we get into how the system fails and how this tool fixes it, there's one thing worth saying clearly upfront — because it might be the most important thing on this page.</p>
+
+    <p>Throughout history, when people have found themselves living under a government that doesn't represent them, the paths available have all carried serious costs:</p>
+
+    <div class="example">
+      <div class="example-header">The usual options — and why they all have a catch</div>
+      <div class="example-body">
+        <p><strong>Street protests.</strong> Powerful for generating attention. But they can be dispersed, criminalised, and waited out. A government that controls the police and the courts can absorb years of protest. And when protesters get tired, the system declares victory.</p>
+        <p><strong>Boycotts.</strong> If enough people refuse to vote, it delegitimises the result — in theory. In practice, low turnout usually helps the party with the most loyal base. And governments rarely resign because people stayed home.</p>
+        <p><strong>Radical movements.</strong> History is full of cases where justified frustration with a rigged system turned into something far more dangerous. Violence hands power back to those who hold the police and the army. It also hands them a narrative: "see, the opposition are extremists."</p>
+        <p><strong>Emigration.</strong> Millions of people in countries with entrenched FPTP governments have simply left. The most energetic, educated, and frustrated citizens go elsewhere. The ratchet turns a little further.</p>
+      </div>
+    </div>
+
+    <p>What all of these have in common is that they operate <em>outside</em> the system — or against it. And that gives the system's defenders something to push back against. A protest can be broken up. A boycott can be ignored. A radical movement can be criminalised. Emigrants are gone.</p>
+
+    <div class="pullquote">
+      This tool does something none of those approaches do: it works entirely <em>inside</em> the existing rules. It uses the ballot box — the system's own mechanism — to correct the system's own distortion. There is nothing to ban. There is no one to arrest. There is no argument to make about legitimacy, because the legitimacy is unimpeachable: people are simply voting.
+    </div>
+
+    <p>This is what political scientists call <strong>constitutional continuity</strong> — change that happens through the system rather than against it. It's rare. Most meaningful political change in history has involved some kind of rupture: a revolution, a coup, a crisis, a war. Those ruptures are often necessary. But they are also unpredictable, costly, and frequently captured by forces that were not the original drivers of change.</p>
+
+    <p>A tool that produces the same outcome — the removal of an entrenched minority government — through a normal election, with normal votes, counted by normal officials, is genuinely unprecedented in its combination of properties. It is radical in its effect and conservative in its method. It asks nothing of voters except the one thing they already have the right to do: cast a ballot.</p>
+
+    <p>And if the new government eventually disappoints? The tool is still there. The next election comes. The same method applies. No rupture required — ever.</p>
+
+    <p>That's the breakthrough. Now let's understand why it's needed.</p>
+
+    <!-- 1. THE PROBLEM -->
+    <h2 id="problem">
+      <span class="section-num">Part 2</span>
+      The problem: how a minority governs a majority
+    </h2>
+
+    <p>Imagine you live in a neighbourhood of ten people. You're all trying to decide what to have for dinner. Seven of you want something different — pizza, sushi, pasta, Thai food. Three of you all want the same thing: burgers. Because the seven can't agree, the three win. Every time. And now the burger people get to decide where the restaurant is, what the opening hours are, and who gets a seat at the table.</p>
+
+    <p>This is, roughly, how First-Past-the-Post (FPTP) voting works. In each constituency, the candidate with the most votes wins — not a majority, just more than anyone else. When multiple opposition candidates split the vote between them, a ruling party candidate can win with 30, 35, or even 28% of the local vote. Multiply this across hundreds of constituencies, and you get a parliament — and a government — that does not reflect what most people actually want.</p>
+
+    <div class="example">
+      <div class="example-header">Example · A typical constituency result</div>
+      <div class="example-body">
+        <p>Let's say 100,000 people vote in a constituency. The result looks like this:</p>
+        <table class="vote-table">
+          <thead>
+            <tr><th>Candidate</th><th>Party</th><th>Votes</th><th>Share</th></tr>
+          </thead>
+          <tbody>
+            <tr class="winner">
+              <td>A. Smith</td><td>Ruling Party</td><td>32,000</td><td>32% ← WINS</td>
+            </tr>
+            <tr class="loser">
+              <td>B. Jones</td><td>Opposition 1</td><td>28,000</td><td>28%</td>
+            </tr>
+            <tr class="loser">
+              <td>C. Brown</td><td>Opposition 2</td><td>22,000</td><td>22%</td>
+            </tr>
+            <tr class="loser">
+              <td>D. Taylor</td><td>Opposition 3</td><td>18,000</td><td>18%</td>
+            </tr>
+            <tr>
+              <td colspan="4" class="note">68% voted against the winner — but the winner takes the seat.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Now imagine this happening in 200 constituencies across the country. The ruling party ends up with a comfortable parliamentary majority — despite the fact that two-thirds of voters opposed them almost everywhere.</p>
+      </div>
+    </div>
+
+    <p>This isn't a fringe scenario. It's the normal operation of FPTP systems. In the UK, governments have routinely won landslide majorities with 35–40% of votes cast. In India, the BJP won an outright majority in 2014 with just 31% of the national vote.</p>
+
+    <p>The system was designed for a two-party world. In a multi-party democracy, it consistently produces governments that most voters did not choose.</p>
+
+    <!-- 2. DIVISION -->
+    <h2 id="division">
+      <span class="section-num">Part 3</span>
+      Why the system is designed to divide us
+    </h2>
+
+    <p>Here is something important that often gets missed: this isn't just a flaw in the system. For the people in power, it's a feature. And a rational government under FPTP quickly learns to exploit it.</p>
+
+    <p>Think about it from the ruling party's perspective. Their biggest threat is a single strong opponent or a coordinated one. As long as the opposition remains split, the mathematics work in their favour. So the incentive is clear: <em>keep the opposition split</em>. And the most reliable way to keep people split is to make them angry at each other.</p>
+
+    <div class="pullquote">
+      The incentive to divide — to set communities against each other along lines of religion, class, region, or culture — is baked into the architecture of the electoral system itself. This isn't conspiracy. It's just how rational actors respond to the rules of the game.
+    </div>
+
+    <p>Culture wars, identity politics, "us vs them" rhetoric — these aren't just ugly side effects of modern politics. Under FPTP, they are <em>optimal strategy</em>. A ruling party that keeps 65% of voters furious at each other rather than at the government is doing exactly what the system rewards.</p>
+
+    <p>And then comes the second phase: once stable power is achieved, the rational move is to make it permanent. Redraw constituency boundaries to concentrate opposition votes into fewer seats. Tighten the rules for registering new parties. Reshape the media landscape. Adjust the courts. Each step is individually defensible, sometimes even banal — but together they form a ratchet that makes the next election slightly easier than the last.</p>
+
+    <div class="example">
+      <div class="example-header">Example · The Hungarian case</div>
+      <div class="example-body">
+        <p>In 2020, Hungary introduced a rule requiring any party that wanted to run a national list — and thus compete for proportional seats — to field candidates in at least 71 of the 106 individual constituencies. This sounds like a reasonable participation threshold. In practice, it was a trap.</p>
+        <p>To field candidates in 71 constituencies, each opposition party had to run their own candidates almost everywhere. But when multiple opposition parties all ran candidates in the same constituencies, they split the vote — and the ruling party won on a plurality. The parties knew this. They tried to negotiate. But the prisoner's dilemma was structural: any party that stepped back from 71 constituencies lost its national list — its only solid lifeline. So everyone ran everywhere, the vote split, and the ruling party kept on winning supermajorities on around 45–49% of the popular vote.</p>
+        <p>The system wasn't just unfair. It was a machine for manufacturing fragmentation.</p>
+      </div>
+    </div>
+
+    <!-- 3. THE SOLUTION -->
+    <h2 id="solution">
+      <span class="section-num">Part 4</span>
+      The idea: coordinating without agreeing on anything
+    </h2>
+
+    <p>The traditional answer to vote-splitting is an opposition coalition. Parties sit down, negotiate, decide which of them stands aside in each constituency, issue a joint platform, shake hands and pretend to like each other. Sometimes it works. More often, it doesn't — because it requires trust between parties that have spent years attacking each other, and it requires voters to accept a compromise candidate they didn't choose.</p>
+
+    <p>But here's the thing: you don't actually need any of that. You don't need the parties to agree. You don't need a joint platform. You don't even need voters to like the same things. You only need one agreement, at the level of individual voters:</p>
+
+    <div class="pullquote">
+      "I don't know who I want to win. But I know I want the current government to lose. And I'm willing to vote for whichever opposition candidate has the best mathematical chance of beating them — if everyone else does the same."
+    </div>
+
+    <p>That's it. No ideology. No compromise. No "setting aside our differences" — because the tool doesn't ask you to have the same values as the person voting next to you. It only asks you to use the same method to decide who to vote for.</p>
+
+    <p>The method is this: a simple algorithm, run on your phone, that takes publicly available information about your constituency and produces a single recommendation — the coordinated candidate. The same inputs always produce the same output. If you run it and your neighbour runs it, you get the same answer. And so does everyone else using the tool, everywhere in the country, all at once.</p>
+    
+    <p> Simply put, if you vote for my party's candidate in your constituency, I do the same for you — or whoever I need to do it for, as long as it is fair on the nationwide scale: and this tool helps, to keep it fair.</p>
+
+    <!-- 4. HOW IT WORKS -->
+    <h2 id="how">
+      <span class="section-num">Part 5</span>
+      How it works, step by step
+    </h2>
+
+    <p>The tool needs three pieces of information:</p>
+
+    <p><strong>1. Your constituency number.</strong> This is publicly available — just look it up before election day.</p>
+
+    <p><strong>2. The opposition candidates in your constituency, and roughly how popular each one is.</strong> You can use the results from the previous election, or a rough estimate. It doesn't need to be exact — the algorithm is robust to approximate inputs.</p>
+
+    <p><strong>3. A seed number.</strong> This is the key ingredient. The tool uses the opening value of your country's main stock exchange index on the Monday morning before the election. Why? Because this number is published in every newspaper, announced on every radio station, displayed in every bank branch — it's publicly available to anyone, even without internet access. And crucially, nobody controls it. It can't be manipulated by the people running the tool, or by the government, or by anyone else.</p>
+
+    <div class="example">
+      <div class="example-header">Example · What the calculation looks like</div>
+      <div class="example-body">
+        <p>Say you're in constituency 47. The three main opposition candidates are Anna (estimated 35% support), Ben (25%), and Clara (15%). The stock index opened at 12,847.33 on Monday morning.</p>
+        <p>The tool computes, for each candidate, many versions of a cryptographic hash — a mathematical fingerprint — using their name, the constituency number, the index value, and a series of numbered "salt" values. The number of salt values used for each candidate is proportional to their popularity: Anna gets 35 attempts, Ben gets 25, Clara gets 15.</p>
+        <p>Then it finds the largest hash across all of them. Whoever produced it is the coordinated candidate for this constituency.</p>
+        <p>Because Anna has more attempts, she's most likely to win — but not certain. Ben and Clara have a real chance too, proportional to their support. The result can't be predicted before the index value is known. And once it's known, anyone with a terminal can verify it independently in seconds.</p>
+      </div>
+    </div>
+
+    <div class="algo-box">
+      <span class="c">// The core calculation — anyone can verify this independently</span><br>
+      <span class="k">winner</span> = <span class="v">max</span>(<br>
+      &nbsp;&nbsp;SHA-256( <span class="v">constituency</span> | <span class="v">candidate_name</span> | <span class="v">salt_i</span> | <span class="v">index_value</span> )<br>
+      &nbsp;&nbsp;<span class="c">// for each candidate, repeated [popularity] times</span><br>
+      )
+    </div>
+
+    <p>The whole thing runs offline, in a single HTML file that fits on a USB drive, can be sent in an e-mail or via encrypted chat. No server, no account, no internet connection required. It works on any phone browser. And because the algorithm is open and standard, anyone can reproduce the result independently — which means no one needs to trust the tool itself.</p>
+
+    <!-- 5. PROPERTIES -->
+    <h2 id="properties">
+      <span class="section-num">Part 6</span>
+      Eight reasons this is different from everything before it
+    </h2>
+
+    <ul class="prop-list">
+      <li>
+        <span class="prop-icon">🤝</span>
+        <div class="prop-text">
+          <strong>No ideology required</strong>
+          <p>Traditional coalitions ask parties and voters to share a platform. This tool asks for nothing of the sort. You can disagree with everyone on the ballot and still use it. The only shared premise is: "the current situation is worse than any alternative." That's a much lower bar — and a much more durable one.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">⚖️</span>
+        <div class="prop-text">
+          <strong>Peaceful, lawful, and constitutionally unassailable</strong>
+          <p>This is not a protest, a boycott, or a disruption of any kind. It's a more careful use of the vote you already have, inside the existing electoral system, using its own rules. There is nothing for authorities to ban — it's just people deciding how to vote. Unlike every other form of political pressure, it cannot be delegitimised, criminalised, or absorbed. It is the system working as intended — just more accurately than its architects expected.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">💡</span>
+        <div class="prop-text">
+          <strong>Self-activating: it spreads when needed, lies dormant when not</strong>
+          <p>The tool doesn't need a campaign behind it. It spreads when people are genuinely dissatisfied and looking for a way out. When the government is tolerable, nobody bothers. When it isn't, people find it and share it. The pain is the engine — which also means it can't be deployed cynically or artificially.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">🔄</span>
+        <div class="prop-text">
+          <strong>Self-correcting: it works against anyone who abuses power</strong>
+          <p>If the coalition that wins through this method eventually becomes the new entrenched minority government — complacent, self-serving, deaf to voters — then the tool can be turned against them too. It has no loyalty to any side. It coordinates against whoever holds power against the wishes of the majority. This is not a tool for the left or the right. It's a tool for the outvoted.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">🎲</span>
+        <div class="prop-text">
+          <strong>Fair to smaller parties: weighted randomness, not just winner-takes-all</strong>
+          <p>The algorithm doesn't automatically pick the most popular opposition candidate. It gives more popular candidates more chances — but smaller parties still have a real shot. This prevents the tool from simply entrenching the largest opposition party and gives genuinely pluralistic outcomes over time.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">🔍</span>
+        <div class="prop-text">
+          <strong>Verifiable without trusting us</strong>
+          <p>The calculation uses SHA-256 — one of the most widely used cryptographic standards in the world. Anyone with a laptop can reproduce the result in seconds. If a different version of this tool gives a different answer for the same inputs, it's provably tampered with. You never have to trust the tool itself — only the maths.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">📵</span>
+        <div class="prop-text">
+          <strong>Offline, untraceable, uncensorable</strong>
+          <p>The tool is a single file. It needs no internet connection, no server, no account. It can be shared over Bluetooth, copied onto a USB drive, distributed as a QR code, passed from phone to phone. There is no central point that can be shut down, no database of users that can be seized, no traffic that can be monitored. It is, by design, ungovernable.</p>
+        </div>
+      </li>
+      <li>
+        <span class="prop-icon">📊</span>
+        <div class="prop-text">
+          <strong>Statistically robust: doesn't need everyone, just enough</strong>
+          <p>The tool doesn't require universal adoption. It only needs enough people in each constituency to shift the balance. Once a critical mass coordinates, the statistical outcome changes — and others, seeing the momentum, tend to follow. You don't need to convince the whole crowd to turn. You just need to start the turn.</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- 6. THE DEEPER PICTURE -->
+    <h2 id="deeper">
+      <span class="section-num">Part 7</span>
+      The deeper picture: a self-correcting democratic tool
+    </h2>
+
+    <p>Let's zoom out for a moment and look at what this tool actually is, in the broadest sense.</p>
+
+    <p>FPTP systems have a well-documented failure mode: they produce stable governments from fragmented opposition. This is often described as a feature — "strong, decisive government" — and in its early stages, it can be. But stability and legitimacy are not the same thing. A government that wins 35% of votes and holds 60% of parliamentary seats is stable. It is not, in any meaningful sense, the choice of the people.</p>
+
+    <p>Over time, the rational response of such a government is to protect its position. The tools available to it — boundary changes, media regulation, party funding rules, judicial appointments — are all individually defensible. Together, they form a slow-moving but extremely effective machine for making democratic alternation harder with each passing cycle. The process is gradual enough that it rarely triggers the alarm bells associated with authoritarian takeovers. By the time most people notice, the ratchet has already turned several clicks.</p>
+
+    <div class="pullquote">
+      This tool is a single, narrow intervention at the precise point where the ratchet catches: the moment of coordination failure that FPTP exploits. It doesn't need to fix the whole system. It just needs to unlock that one moment — repeatedly, whenever it's needed.
+    </div>
+
+    <p>What makes it genuinely unusual is the combination of properties it has all at once. It requires no organisation. It has no leaders who can be arrested or discredited. It has no funding that can be cut off. It asks voters to give up nothing — not their values, not their preferred party, not their identity. It only asks them to make one tactical decision, using a shared, verifiable method, on a single day.</p>
+
+    <p>And then — this is the part worth sitting with — if it works, and a new government takes power, and that government eventually disappoints, the same tool is still there. Still working. Still pointing at whoever holds power against the wishes of the majority. The coordinated candidate changes. The method does not.</p>
+
+    <div class="highlight">
+      <strong>In short</strong>
+      The tool is not pro-opposition. It is not anti-government. It is pro-majority. It exists to ensure that the largest group of people — even if they agree on nothing except their dissatisfaction — can make their weight felt in a system designed to divide and discount them.
+    </div>
+
+    <p>Traditional opposition coalitions ask the question: <em>"Can we agree on what we want?"</em> This tool asks a different question entirely: <em>"Can we agree on a method for deciding who to vote for, even if we agree on nothing else?"</em></p>
+
+    <p>That is a much easier question. And the answer, it turns out, is yes.</p>
+
+  </div><!-- end body-text -->
+
+  <div class="cta">
+    <div class="cta-tag">Open · Offline · Verifiable</div>
+    <h3>Ready to try it?</h3>
+    <p>One HTML file. No server, no account, no internet needed. Download it, share it, check the maths yourself.</p>
+    <a href="all41and14all_voting.html" class="cta-btn">Open the tool →</a>
+  </div>
+
+</div><!-- end page -->
+
+</body>
+</html>

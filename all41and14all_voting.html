@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>All for One and One for All Coordination against FPTP Voting Systems</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: #2a2a3a;
+    --accent: #e8c547;
+    --accent2: #4fc4a0;
+    --danger: #e05555;
+    --text: #e8e8f0;
+    --muted: #7070a0;
+    --font-mono: 'Courier New', Courier, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    color: var(--accent2);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+
+  label {
+    display: block;
+    color: var(--muted);
+    font-size: 0.72rem;
+    margin-bottom: 4px;
+    margin-top: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  input, select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    padding: 8px 10px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--accent);
+  }
+
+  select option {
+    background: var(--surface);
+  }
+
+  .candidate-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .candidate-row input[type="text"] {
+    flex: 2;
+  }
+
+  .candidate-row input[type="number"] {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .candidate-row button {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    width: 32px;
+    height: 36px;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .btn-secondary {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    font-size: 0.75rem;
+  }
+
+  .btn-secondary:hover {
+    background: var(--accent2);
+    color: var(--bg);
+  }
+
+  .add-btn {
+    border-color: var(--border);
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  .add-btn:hover {
+    background: var(--border);
+    color: var(--text);
+  }
+
+  /* EREDMÉNY */
+  #result {
+    display: none;
+  }
+
+  .winner-box {
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .winner-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(232,197,71,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .winner-label {
+    color: var(--muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .winner-name {
+    color: var(--accent);
+    font-size: 1.6rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    word-break: break-word;
+  }
+
+  .winner-hash {
+    color: var(--muted);
+    font-size: 0.62rem;
+    margin-top: 10px;
+    word-break: break-all;
+    letter-spacing: 0.03em;
+  }
+
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+
+  .ranking-table th {
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ranking-table td {
+    padding: 7px 8px;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    vertical-align: middle;
+  }
+
+  .ranking-table tr.winner td {
+    color: var(--accent);
+  }
+
+  .rank-num {
+    color: var(--muted);
+    font-size: 0.7rem;
+    width: 24px;
+  }
+
+  .hash-val {
+    color: var(--muted);
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    word-break: break-all;
+  }
+
+  .bar-wrap {
+    background: var(--border);
+    border-radius: 2px;
+    height: 4px;
+    width: 80px;
+    margin-top: 3px;
+  }
+
+  .bar-fill {
+    background: var(--accent2);
+    border-radius: 2px;
+    height: 4px;
+    transition: width 0.6s ease;
+  }
+
+  .winner .bar-fill {
+    background: var(--accent);
+  }
+
+  /* ALGORITMUS INFO */
+  .algo-info {
+    background: rgba(79,196,160,0.05);
+    border: 1px solid rgba(79,196,160,0.2);
+    border-radius: 3px;
+    padding: 12px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .algo-info code {
+    color: var(--accent2);
+    font-size: 0.7rem;
+  }
+
+  .lotto-display {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    min-height: 34px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(232,197,71,0.1);
+    border: 1px solid rgba(232,197,71,0.3);
+    color: var(--accent);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .disclaimer {
+    color: var(--muted);
+    font-size: 0.65rem;
+    line-height: 1.7;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 400px) {
+    body { padding: 10px; font-size: 13px; }
+    .winner-name { font-size: 1.3rem; }
+    .bar-wrap { width: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>All for One and One for All Coordination against FPTP Voting Systems<span class="tag">v0.1</span></h1>
+  <p>Decentralised coordination tool for voters · Offline · Open</p>
+</header>
+
+<!-- INPUT -->
+<div class="section" id="input-section">
+  <div class="section-title">Constituency data</div>
+
+  <label>Constituency number (e.g. 101)</label>
+  <input type="number" id="korzetkod" placeholder="101" min="1" max="999">
+
+  <label>Country <span style="color:var(--muted);font-size:0.65rem">(to select the stock exchange)</span></label>
+  <select id="country-select" onchange="updateExchangeInfo()">
+    <option value="">— select —</option>
+    <option value="AT">Austria → ATX (Wiener Börse)</option>
+    <option value="HR">Croatia → CROBEX (ZSE)</option>
+    <option value="CZ">Czech Republic → PX (Praha)</option>
+    <option value="HU">Hungary → BUX (BSE)</option>
+    <option value="IN">India → BSE SENSEX (Bombay)</option>
+    <option value="PL">Poland → WIG20 (GPW)</option>
+    <option value="RO">Romania → BET (BVB)</option>
+    <option value="RS">Serbia → BELEX15 (BELEX)</option>
+    <option value="SK">Slovakia → SAX (BSSE)</option>
+    <option value="SI">Slovenia → SBITOP (LJSE)</option>
+    <option value="OTHER">Other → first exchange alphabetically</option>
+  </select>
+
+  <div id="exchange-info" class="algo-info" style="display:none;margin-top:8px;"></div>
+
+  <label>Seed value <span style="color:var(--muted);font-size:0.65rem">(stock index · Monday 8:00 AM opening value)</span></label>
+  <div style="display:flex;gap:8px;margin-top:4px;">
+    <input type="text" id="lotto" placeholder="e.g. 12345.67" style="flex:3">
+    <button class="btn btn-secondary" style="flex:1;margin-top:0;padding:8px 4px;font-size:0.65rem;" onclick="randomLotto()">Test</button>
+  </div>
+  <div class="info-row">
+    <span>Source: newspaper financial section · TV/radio market report · bank app</span>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div class="section-title" style="margin-bottom:8px;">Candidates and popularity</div>
+    <div class="algo-info">
+      The <code>popularity</code> = number of salts in the hash.<br>
+      The higher the number, the more "cards" a candidate gets.<br>
+      Primarily use party list share of previous election result or perhaps an estimated %.
+    </div>
+    
+    <div style="display:flex;gap:8px;margin-bottom:4px;">
+      <span style="flex:2;color:var(--muted);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;">Candidate name</span>
+      <span style="flex:1;color:var(--muted);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;">Popularity</span>
+      <span style="width:32px;"></span>
+    </div>
+
+    <div id="candidates-list"></div>
+
+    <button class="btn add-btn" onclick="addCandidate()">+ Add candidate</button>
+  </div>
+
+  <button class="btn" style="margin-top:20px;" onclick="calculate()">▶ Calculate</button>
+</div>
+
+<!-- RESULT -->
+<div class="section" id="result">
+  <div class="section-title">Result</div>
+
+  <div class="winner-box">
+    <div class="winner-label">Coordinated candidate — cast your vote for:</div>
+    <div class="winner-name" id="winner-name">—</div>
+    <div class="winner-hash" id="winner-hash"></div>
+  </div>
+
+  <table class="ranking-table" id="ranking-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Candidate</th>
+        <th>Best hash</th>
+      </tr>
+    </thead>
+    <tbody id="ranking-body"></tbody>
+  </table>
+
+  <div style="margin-top:16px;">
+    <div class="section-title">Verification</div>
+    <div class="algo-info" id="verify-info"></div>
+  </div>
+
+  <button class="btn btn-secondary" style="margin-top:8px;" onclick="reset()">← Back / New calculation</button>
+
+  <div class="disclaimer">
+    This tool is for informational purposes only. No voter is obligated to follow its suggestion — this is a coordination proposal that anyone can freely verify, accept, or disregard.
+  </div>
+</div>
+
+<script>
+// ─── SHA-256 (pure JS, nincs külső függőség) ───────────────────────────────
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// BigInt a hash összehasonlításhoz
+function hexToBigInt(hex) {
+  return BigInt('0x' + hex);
+}
+
+// ─── Jelölt UI ─────────────────────────────────────────────────────────────
+let candidateCount = 0;
+
+function addCandidate(name = '', pop = '') {
+  candidateCount++;
+  const id = 'c' + candidateCount;
+  const div = document.createElement('div');
+  div.className = 'candidate-row';
+  div.id = 'row_' + id;
+  div.innerHTML = `
+    <input type="text" id="name_${id}" placeholder="Candidate name" value="${name}">
+    <input type="number" id="pop_${id}" placeholder="%" min="1" max="100" value="${pop}">
+    <button onclick="removeCandidate('row_${id}')">×</button>
+  `;
+  document.getElementById('candidates-list').appendChild(div);
+}
+
+function removeCandidate(rowId) {
+  const el = document.getElementById(rowId);
+  if (el) el.remove();
+}
+
+function getCandidates() {
+  const rows = document.querySelectorAll('.candidate-row');
+  const result = [];
+  rows.forEach(row => {
+    const idSuffix = row.id.replace('row_', '');
+    const name = document.getElementById('name_' + idSuffix).value.trim();
+    const pop = parseInt(document.getElementById('pop_' + idSuffix).value) || 0;
+    if (name && pop > 0) result.push({ name, pop });
+  });
+  return result;
+}
+
+const EXCHANGES = {
+  AT:    { name: 'ATX', full: 'Austrian Traded Index (Wiener Börse)' },
+  HR:    { name: 'CROBEX', full: 'CROBEX (Zagrebačka burza)' },
+  CZ:    { name: 'PX', full: 'PX Index (Burza cenných papírů Praha)' },
+  HU:    { name: 'BUX', full: 'BUX (Budapesti Értéktőzsde)' },
+  IN:    { name: 'SENSEX', full: 'BSE SENSEX (Bombay Stock Exchange)' },
+  PL:    { name: 'WIG20', full: 'WIG20 (Giełda Papierów Wartościowych)' },
+  RO:    { name: 'BET', full: 'BET (Bursa de Valori București)' },
+  RS:    { name: 'BELEX15', full: 'BELEX15 (Beogradska berza)' },
+  SK:    { name: 'SAX', full: 'SAX (Burza cenných papierov Bratislava)' },
+  SI:    { name: 'SBITOP', full: 'SBITOP (Ljubljanska borza)' },
+  OTHER: { name: '?', full: 'First stock exchange in the country alphabetically' },
+};
+
+function updateExchangeInfo() {
+  const sel = document.getElementById('country-select').value;
+  const box = document.getElementById('exchange-info');
+  if (!sel) { box.style.display = 'none'; return; }
+  const ex = EXCHANGES[sel];
+  box.style.display = 'block';
+  box.innerHTML = `
+    <strong style="color:var(--accent2)">Index to use: ${ex.name}</strong><br>
+    ${ex.full}<br><br>
+    <span style="color:var(--muted)">
+    Seed = opening value on <strong style="color:var(--text)">Monday at 8:00 AM</strong> of the week before the election.<br>
+    Enter the value exactly as published (e.g. <code>45123.78</code>).<br>
+    Source: newspaper financial section · TV/radio market report · bank app · any financial website.
+    </span>
+  `;
+}
+
+function randomLotto() {
+  const base = Math.floor(Math.random() * 90000) + 10000;
+  const dec = Math.floor(Math.random() * 100);
+  document.getElementById('lotto').value = `${base}.${dec.toString().padStart(2,'0')}`;
+}
+
+// ─── FŐ ALGORITMUS ──────────────────────────────────────────────────────────
+// max( hash(körzetszám | jelölt_neve | salt_i | lottószám) )
+// ahol salt_i ∈ [0, népszerűség)
+// A legtöbb salt-tal rendelkező (= legnépszerűbb) jelöltnek statisztikailag
+// a legnagyobb a valószínűsége hogy a maximális hash-t adja.
+
+async function calculate() {
+  const korzetkod = document.getElementById('korzetkod').value.trim();
+  const lotto = document.getElementById('lotto').value.trim();
+  const candidates = getCandidates();
+
+  if (!korzetkod) { alert('Please enter the constituency number!'); return; }
+  if (!lotto) { alert('Please enter the seed value!'); return; }
+  if (candidates.length < 2) { alert('At least 2 candidates required!'); return; }
+
+  const btn = document.querySelector('#input-section .btn:last-child');
+  btn.textContent = '⏳ Calculating...';
+  btn.disabled = true;
+
+  // Minden jelölthez kiszámítjuk az összes hash-t és megtartjuk a maximumot
+  const results = [];
+
+  for (const cand of candidates) {
+    let maxHash = '0'.repeat(64);
+    let maxHashBig = BigInt(0);
+    let bestSalt = 0;
+
+    for (let i = 0; i < cand.pop; i++) {
+      const input = `${korzetkod}|${cand.name}|${i}|${lotto}`;
+      const h = await sha256(input);
+      const hBig = hexToBigInt(h);
+      if (hBig > maxHashBig) {
+        maxHashBig = hBig;
+        maxHash = h;
+        bestSalt = i;
+      }
+    }
+
+    results.push({
+      name: cand.name,
+      pop: cand.pop,
+      maxHash,
+      maxHashBig,
+      bestSalt
+    });
+  }
+
+  // Rendezés: legnagyobb hash első
+  results.sort((a, b) => (a.maxHashBig > b.maxHashBig ? -1 : 1));
+
+  const winner = results[0];
+
+  // UI megjelenítés
+  document.getElementById('winner-name').textContent = winner.name;
+  document.getElementById('winner-hash').textContent = 'Hash: ' + winner.maxHash;
+
+  // Ranking tábla
+  const tbody = document.getElementById('ranking-body');
+  tbody.innerHTML = '';
+  const maxVal = winner.maxHashBig;
+
+  results.forEach((r, idx) => {
+    const ratio = Number((r.maxHashBig * BigInt(100)) / maxVal);
+    const tr = document.createElement('tr');
+    if (idx === 0) tr.className = 'winner';
+    tr.innerHTML = `
+      <td class="rank-num">${idx === 0 ? '★' : idx + 1}</td>
+      <td>
+        <div>${r.name}</div>
+        <div style="color:var(--muted);font-size:0.65rem;">popularity: ${r.pop} · best salt: ${r.bestSalt}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${ratio}%"></div></div>
+      </td>
+      <td class="hash-val">${r.maxHash.substring(0, 16)}…</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Ellenőrzés info
+  const country = document.getElementById('country-select').value;
+  const exInfo = country && EXCHANGES[country] ? EXCHANGES[country].name : 'stock index';
+  const verifyInput = `${korzetkod}|${winner.name}|${winner.bestSalt}|${lotto}`;
+  document.getElementById('verify-info').innerHTML = `
+    <strong style="color:var(--accent2)">Verification (anyone can check this):</strong><br><br>
+    Constituency: <code>${korzetkod}</code> · Seed (${exInfo} Mon 8:00): <code>${lotto}</code><br>
+    Winning input: <code>${verifyInput}</code><br>
+    SHA-256: <code>${winner.maxHash}</code><br><br>
+    <span style="color:var(--muted)">
+    Terminal: <code>echo -n "${verifyInput}" | sha256sum</code><br>
+    Or use any online SHA-256 calculator with the input string above.
+    </span>
+  `;
+
+  btn.textContent = 'TEST';
+  btn.disabled = false;
+
+  document.getElementById('input-section').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function reset() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('input-section').style.display = 'block';
+}
+
+// ─── Inicializálás ──────────────────────────────────────────────────────────
+addCandidate('Opposition A', 35);
+addCandidate('Opposition B', 28);
+addCandidate('Opposition C', 15);
+</script>
+
+</body>
+</html>
