@@ -121,4 +121,4 @@ MIT — free to use, study, modify, and distribute. The only informal constraint
 
 This project emerged from a conversation about the structural mechanics of FPTP systems — why they systematically reward fragmentation, how incumbents exploit that mathematically, and why every traditional response (coalitions, protests, boycotts) has failed to solve the underlying coordination problem. The tool is the result of asking: what is the minimum intervention that breaks the coordination failure, requires no trust between parties, and operates entirely within the law?
 
-The answer turned out to be a 200-line HTML file.
+The answer turned out to be a few 100-line HTML file.
