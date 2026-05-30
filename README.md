@@ -37,7 +37,7 @@ winner = max( SHA-256( constituency | candidate_name | salt_i | index_value ) )
          for each candidate, repeated [popularity] times
 ```
 
-More popular candidates have more "lottery tickets" — a higher probability of winning — but the result is not deterministic until the index value is known. Once known, it's the same for everyone, everywhere, and independently verifiable.
+More popular candidates have more "cards" — a higher probability of winning the "trump" — but the result is not deterministic until the index value is known. Once known, it's the same for everyone, everywhere, and independently verifiable.
 
 ![FPTP Coordination Illustration](fptp_illustration.svg)
 
