@@ -17,7 +17,7 @@ In FPTP systems, the candidate with the most votes wins each constituency — no
 Every other response to this problem — protests, boycotts, radical movements — operates *outside* the system, which gives the system's defenders something to push back against. A protest can be dispersed. A boycott can be ignored. An emigrant is gone.
 
 **This tool works entirely inside the existing rules.** It uses the ballot box — the system's own mechanism — to correct the system's own distortion. There is nothing to ban. There is no one to arrest. There is no argument about legitimacy, because voters are simply voting.
-
+![FPTP Coordination Illustration](fptp_illustration.svg)
 This is change through constitutional continuity. It is radical in effect and conservative in method.
 
 ---
