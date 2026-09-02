@@ -1,6 +1,6 @@
 # FPTP Protest Voting
 
-> *"Coordinate without a commo ground, and leave the agreements to your representatives."*
+> *"Coordinate without a common ground, and leave the agreements to your representatives."*
 
 **A single HTML file that helps voters in First-Past-the-Post democracies coordinate tactically — without agreeing on anything except the method.**
 
