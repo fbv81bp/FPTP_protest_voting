@@ -157,7 +157,7 @@ This is not a tool for the left or the right. It is a tool for the outvoted.
 
 ## Usage
 
-1. Download `fptp_coordination_v3_1.html`
+1. Download `Distributed_loaded_dice.html`
 2. Open it in any browser — no internet required
 3. Enter your constituency number, the opposition candidates with estimated popularity percentages, and the stock index opening value from the first trading day of the week before election day
 4. **Compare your input fingerprint with friends in the same constituency** — a matching code means matching inputs
