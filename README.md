@@ -1,6 +1,6 @@
 # FPTP Protest Voting
 
-> *"Everyone for one, one for everyone — a voter coordination pact"*
+> *"Coordinate without a commo ground, and leave the agreements to your representatives."*
 
 **A single HTML file that helps voters in First-Past-the-Post democracies coordinate tactically — without agreeing on anything except the method.**
 
