@@ -130,8 +130,8 @@ If a different version of this tool produces a different result for the same inp
 
 | File | Description |
 |------|-------------|
-| `fptp_coordination_v3_1.html` | The coordination tool (canonical version) — open in any browser, works offline |
-| `fptp_landing_blog.html` | Long-form explainer / landing page for non-technical readers |
+| `Distributed_loaded_dice.html` | The coordination tool (canonical version) — open in any browser, works offline |
+| `Introduction.html` | Long-form explainer / landing page for non-technical readers |
 
 ---
 
